@@ -11,6 +11,9 @@ const config = {
 }
 
 firebase.initializeApp(config);
-
+export const provider = new firebase.auth.GoogleAuthProvider();
+provider.addScope('https://www.googleapis.com/auth/plus.login')
+provider.addScope('https://www.googleapis.com/auth/books')
 export const ref = firebase.database().ref()
 export const firebaseAuth = firebase.auth
+

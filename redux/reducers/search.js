@@ -6,8 +6,8 @@ const search = (state = [], action) => {
 
         case constants.SEARCH_BOOK:
             return Object.assign({},state,{
-                fetchingSearchResponse:true,
-                fetchingSearchResponseError:false,
+                authenticated:true,
+                authenticating:false,
                 showSearchResponse:false
             },...state)
             break;
@@ -19,7 +19,7 @@ const search = (state = [], action) => {
             },...state)
             break;
         case constants.SEARCH_BOOK_RESPONSE_RECEIVED:
-            console.log('search response received')
+            console.log('authentication.js response received')
 
             return Object.assign({},state,{
                 searchResponse:action.response,

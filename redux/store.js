@@ -10,8 +10,12 @@ const initialState = {
         fetchingSearchResponse:false,
         fetchingSearchResponseError:false,
         showSearchResponse:false
+    },
+    auth:{
+        authenticated:false,
+        authenticating:false,
+        user:{},
     }
-
 }
 
 const store = createStore(

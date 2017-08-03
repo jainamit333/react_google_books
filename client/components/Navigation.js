@@ -2,6 +2,7 @@ import React from 'react';
 import request from 'superagent'
 import {removeSearchResult, search, searchBookResponseReceived, searchError} from "../../redux/actions/search";
 import {connect} from "react-redux";
+import {login, logout} from "../../firebase/auth";
 
 
 
@@ -42,20 +43,31 @@ class Navigation extends React.Component {
 
     handleResetSearch(event){
 
-        console.log('reset search result');
+        console.log('reset authentication.js result');
         this.state.keyword = '';
         this.props.dispatch(removeSearchResult())
 
     }
 
     render() {
+
+        var styles = {
+
+            marginTop:{
+                marginTop:'10px'
+            },
+            baseColor:{
+                color:'#a83808'
+            }
+
+        }
+
         return (
             <nav className="navbar navbar-default">
                 <div className="container-fluid">
                     <div className="navbar-header">
-                        <a className="navbar-brand" href="#">
-                            <span className="glyphicon glyphicon-bishop" aria-hidden="true"></span>
-
+                        <a className="navbar-brand" href="#" >
+                            <span  className="glyphicon glyphicon-bishop " aria-hidden="true" style={styles.baseColor}></span>
                         </a>
                         <form className="navbar-form navbar-left" role="search" onSubmit={this.handleSubmit.bind(this)}>
                             <div className="form-group">
@@ -69,7 +81,15 @@ class Navigation extends React.Component {
                                 <button  className="btn btn-default " onClick={this.handleResetSearch.bind(this)}>Clear</button>
                             }
                         </form>
+
                     </div>
+
+                    <ul className="nav navbar-nav navbar-right ">
+                        <li>
+                            {this.props.authenticated && <span style={styles.marginTop} onClick={logout} className="btn btn-sm btn-danger">Logout</span>}
+                            {!this.props.authenticated && <span style={styles.marginTop} onClick={login(this.props.dispatch)} className="btn btn-sm btn-danger">Login</span>}
+                        </li>
+                    </ul>
                 </div>
             </nav>
         );
@@ -81,7 +101,7 @@ function mapStateToProps(state) {
         searchResponse: state.search.searchResponse,
         fetchingSearchResponse: state.search.fetchingSearchResponse,
         fetchingSearchResponseError: state.search.fetchingSearchResponseError,
-
+        authenticated: state.auth.authenticated,
     }
 }
 
